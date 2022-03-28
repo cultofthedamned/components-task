@@ -1,22 +1,24 @@
 package com.klinovvlad.task1klinov.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.klinovvlad.task1klinov.Activities.SecondActivity
 import com.klinovvlad.task1klinov.Adapter.MainAdapter
 import com.klinovvlad.task1klinov.Model.Item
 import com.klinovvlad.task1klinov.databinding.FirstScreenBinding
 
-class FirstScreen : Fragment() {
+class FirstScreen : Fragment(), MainAdapter.OnItemClickListener {
     private lateinit var first_screen_binding: FirstScreenBinding
     lateinit var _adapter: MainAdapter
     lateinit var linerLayoutManager: LinearLayoutManager
     private var item_list_main: ArrayList<Item> = ArrayList()
-    val char_list = arrayOf('a'..'z')
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,11 +39,19 @@ class FirstScreen : Fragment() {
             recyclerviewMain.layoutManager = linerLayoutManager
             recyclerviewMain.setHasFixedSize(true)
             item_list_main.addAll(id_list)
-            _adapter = MainAdapter(item_list_main)
+            _adapter = MainAdapter(item_list_main, this@FirstScreen)
             _adapter.notifyDataSetChanged()
             recyclerviewMain.adapter = _adapter
         }
 
+    }
+
+    override fun onItemClick(position: Int) {
+        val intent = Intent(activity, SecondActivity::class.java)
+        intent.putExtra("id", item_list_main[position].id)
+        intent.putExtra("name", item_list_main[position].name)
+        intent.putExtra("description", item_list_main[position].description)
+        startActivity(intent)
     }
 
     companion object {

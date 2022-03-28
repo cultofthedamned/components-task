@@ -9,19 +9,26 @@ import com.klinovvlad.task1klinov.Model.Item
 import com.klinovvlad.task1klinov.R
 import com.klinovvlad.task1klinov.databinding.ItemMainBinding
 
-class MainAdapter(val item_list: List<Item>) : RecyclerView.Adapter<MainAdapter.MainHolder>() {
+class MainAdapter(val item_list: List<Item>, val listener: OnItemClickListener) : RecyclerView.Adapter<MainAdapter.MainHolder>() {
 
-    interface OnClickListener {
-        fun onItemClick(data_item: Item) {
+    interface OnItemClickListener {
 
-        }
+        fun onItemClick(position: Int)
+
     }
 
-    inner class MainHolder(item: View) : RecyclerView.ViewHolder(item) {
+    inner class MainHolder(item: View) : RecyclerView.ViewHolder(item), View.OnClickListener {
         val adapter_binding = ItemMainBinding.bind(item)
         var txt_name: TextView
         init {
             txt_name = adapter_binding.recycName
+            itemView.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
         }
     }
 
