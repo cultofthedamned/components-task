@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.klinovvlad.task1klinov.Activities.SecondActivity
 import com.klinovvlad.task1klinov.Adapter.MainAdapter
 import com.klinovvlad.task1klinov.Model.Item
+import com.klinovvlad.task1klinov.R
 import com.klinovvlad.task1klinov.databinding.FirstScreenBinding
 
 class FirstScreen : Fragment(), MainAdapter.OnItemClickListener {
@@ -47,11 +48,9 @@ class FirstScreen : Fragment(), MainAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(activity, SecondActivity::class.java)
-        intent.putExtra("id", item_list_main[position].id)
-        intent.putExtra("name", item_list_main[position].name)
-        intent.putExtra("description", item_list_main[position].description)
-        startActivity(intent)
+        activity?.getSupportFragmentManager()?.beginTransaction()
+            ?.replace(R.id.main_frame, SecondScreen.newInstance())
+            ?.commit()
     }
 
     companion object {
