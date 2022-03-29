@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.klinovvlad.task1klinov">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Task1klinov">
+        <receiver
+            android:name=".BroadcastReceiver.MainReceiver"
+            android:enabled="true"
+            android:exported="true">
+        </receiver>
+
         <activity
             android:name=".Activities.SecondActivity"
             android:exported="false" />
@@ -21,6 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".Service.MainService" />
     </application>
 
 </manifest>
