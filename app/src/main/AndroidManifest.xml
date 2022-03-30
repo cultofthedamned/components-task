@@ -11,17 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Task1klinov">
+
         <receiver
-            android:name=".BroadcastReceiver.MainReceiver"
+            android:name=".receiver.MainReceiver"
             android:enabled="true"
             android:exported="true">
         </receiver>
 
         <activity
-            android:name=".Activities.SecondActivity"
+            android:name=".activities.SecondActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +31,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Service.MainService" />
+        <service android:name=".service.MainService" />
     </application>
 
 </manifest>

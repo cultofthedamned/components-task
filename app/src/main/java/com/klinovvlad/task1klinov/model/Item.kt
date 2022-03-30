@@ -1,4 +1,4 @@
-package com.klinovvlad.task1klinov.Model
+package com.klinovvlad.task1klinov.model
 
 data class Item(val id: Int,
                 val name: String,
