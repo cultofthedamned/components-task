@@ -16,6 +16,12 @@
             android:name=".receiver.MainReceiver"
             android:enabled="true"
             android:exported="true">
+            <intent-filter>
+                <action android:name="com.klinovvlad.action.OPEN_MAINACTIVITY" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.klinovvlad.action.OPEN_LAST_ITEM" />
+            </intent-filter>
         </receiver>
 
         <activity
