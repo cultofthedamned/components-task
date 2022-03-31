@@ -42,7 +42,7 @@ class FirstScreen : Fragment() {
         var i = 0
         val dataList = arrayListOf<Item>()
         while (i < 20) {
-            dataList.add(Item(i, "name" + i.toString(), "description" + i.toString()))
+            dataList.add(Item(i, "name" + i, "description" + i))
             i++
         }
         firstScreenBinding.recyclerviewMain.apply {
@@ -51,7 +51,6 @@ class FirstScreen : Fragment() {
             listMain.addAll(dataList)
             val adapter = MainAdapter()
             adapter.submitList(listMain)
-            adapter.notifyDataSetChanged()
             firstScreenBinding.recyclerviewMain.adapter = adapter
             adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
