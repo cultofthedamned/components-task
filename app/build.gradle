@@ -50,6 +50,4 @@ dependencies {
     // navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
-    // multithreading
-    implementation 'androidx.preference:preference-ktx:1.2.0'
 }

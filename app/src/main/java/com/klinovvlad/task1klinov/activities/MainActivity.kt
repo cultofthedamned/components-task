@@ -1,18 +1,17 @@
 package com.klinovvlad.task1klinov.activities
 
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.klinovvlad.task1klinov.adapter.MainAdapter
+import com.klinovvlad.task1klinov.R
 import com.klinovvlad.task1klinov.databinding.ActivityMainBinding
+import com.klinovvlad.task1klinov.fragments.FirstScreen
+import com.klinovvlad.task1klinov.fragments.SecondScreen
+import com.klinovvlad.task1klinov.fragments.communicator.Communicator
 import com.klinovvlad.task1klinov.service.MainService
-import com.klinovvlad.task1klinov.model.Item
 
-class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(), Communicator {
     private lateinit var binding: ActivityMainBinding
-    private var itemList: ArrayList<Item> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,11 +20,14 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickListener {
 
         MainService.startService(this)
 
-        setData()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_frame, FirstScreen())
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onDestroy() {
-        MainService.stopService(this)
         val sharedPref = getSharedPreferences("mainPref", Context.MODE_PRIVATE)
         sharedPref
             .edit()
@@ -34,31 +36,23 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickListener {
         super.onDestroy()
     }
 
-    // клик по итему из списка
-    override fun onItemClick(position: Int) {
-        val intent = Intent(this, SecondActivity::class.java)
+    override fun sendData(id: Int, name: String, description: String) {
+        val bundle = Bundle()
+        bundle.putString("id", id.toString())
+        bundle.putString("name", name)
+        bundle.putString("description", description)
+        val secondFragment = SecondScreen()
+        secondFragment.arguments = bundle
         val sharedPref = getSharedPreferences("mainPref", Context.MODE_PRIVATE)
-        val edit = sharedPref.edit()
-        edit.putString("id", (itemList[position].id).toString())
-        edit.putString("name", itemList[position].name)
-        edit.putString("description", itemList[position].description)
-        edit.commit()
-        startActivity(intent)
-    }
+        sharedPref
+            .edit()
+            .putString("idPref", bundle.getString("id"))
+            .commit()
+        this.supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_frame, secondFragment)
+            .addToBackStack(null)
+            .commit()
 
-    // функция заполняющая список
-    private fun setData() {
-        var i = 0
-        var dataList = arrayListOf<Item>()
-        while (i < 20) {
-            dataList.add(Item(i, "name" + i.toString(), "description" + i.toString()))
-            i++
-        }
-        binding.recyc.layoutManager = LinearLayoutManager(this@MainActivity)
-        binding.recyc.setHasFixedSize(true)
-        itemList.addAll(dataList)
-        val adapter = MainAdapter(itemList, this@MainActivity)
-        adapter.notifyDataSetChanged()
-        binding.recyc.adapter = adapter
     }
 }
