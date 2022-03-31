@@ -19,11 +19,12 @@ class FirstScreen : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         firstScreenBinding = FragmentFirstScreenBinding.inflate(
             inflater,
             container,
-            false)
+            false
+        )
         return firstScreenBinding.root
     }
 
@@ -47,11 +48,13 @@ class FirstScreen : Fragment() {
             firstScreenBinding.recyclerviewMain.layoutManager = LinearLayoutManager(activity)
             firstScreenBinding.recyclerviewMain.setHasFixedSize(true)
             listMain.addAll(dataList)
-            val adapter = MainAdapter(dataList) {
+            val adapter = MainAdapter {
                 communicator = requireActivity() as Communicator
-                communicator.sendData(it.id,
+                communicator.sendData(
+                    it.id,
                     it.name,
-                    it.description)
+                    it.description
+                )
             }
             adapter.submitList(listMain)
             firstScreenBinding.recyclerviewMain.adapter = adapter

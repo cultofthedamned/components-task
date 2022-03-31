@@ -27,14 +27,6 @@ class MainActivity : AppCompatActivity(), Communicator {
             .commit()
     }
 
-    override fun onDestroy() {
-        val sharedPref = getSharedPreferences("mainPref", Context.MODE_PRIVATE)
-        sharedPref
-            .edit()
-            .clear()
-            .commit()
-        super.onDestroy()
-    }
 
     override fun sendData(id: Int, name: String, description: String) {
         val bundle = Bundle()

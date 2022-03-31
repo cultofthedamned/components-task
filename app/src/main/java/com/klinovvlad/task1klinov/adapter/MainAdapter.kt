@@ -9,20 +9,23 @@ import com.klinovvlad.task1klinov.databinding.ItemMainBinding
 import com.klinovvlad.task1klinov.model.Item
 
 class MainAdapter(
-    private val itemList: List<Item>,
-    private val onItemClickLambda: (item: Item) -> Unit) :
+    private val onItemClickLambda: (item: Item) -> Unit
+) :
     ListAdapter<Item, MainAdapter.MainHolder>(MainUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        return MainHolder(ItemMainBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false))
+        return MainHolder(
+            ItemMainBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         holder.bind(getItem(position))
-        val data = itemList[position]
+        val data = currentList[position]
         holder.itemView.setOnClickListener {
             onItemClickLambda(data)
         }
@@ -33,7 +36,7 @@ class MainAdapter(
         fun bind(item: Item) {
             binding.recycName.text = item.name
         }
-        }
+    }
 
     class MainUtil : DiffUtil.ItemCallback<Item>() {
         override fun areItemsTheSame(oldItem: Item, newItem: Item) = oldItem.id == newItem.id

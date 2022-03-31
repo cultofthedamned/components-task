@@ -13,11 +13,12 @@ class SecondScreen : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         second_screen_binding = FragmentSecondScreenBinding.inflate(
             inflater,
             container,
-            false)
+            false
+        )
 
         second_screen_binding.textViewSecond1.text = arguments?.getString("id")
         second_screen_binding.textViewSecond2.text = arguments?.getString("name")

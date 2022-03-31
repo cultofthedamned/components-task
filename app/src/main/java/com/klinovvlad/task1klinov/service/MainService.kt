@@ -11,6 +11,7 @@ import com.klinovvlad.task1klinov.activities.MainActivity
 import com.klinovvlad.task1klinov.R
 
 const val CHANNEL_ID = "ForegroundService"
+
 class MainService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -30,12 +31,12 @@ class MainService : Service() {
         return null
     }
 
-    // запуск и остановка сервиса
     companion object {
         fun startService(context: Context) {
             val startIntent = Intent(context, MainService::class.java)
             ContextCompat.startForegroundService(context, startIntent)
         }
+
         fun stopService(context: Context) {
             val stopIntent = Intent(context, MainService::class.java)
             context.stopService(stopIntent)
