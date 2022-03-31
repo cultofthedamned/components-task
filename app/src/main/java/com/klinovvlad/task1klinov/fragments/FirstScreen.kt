@@ -29,6 +29,16 @@ class FirstScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        createRecycler()
+    }
+
+    override fun onDestroyView() {
+        listMain.clear()
+        super.onDestroyView()
+    }
+
+    private fun createRecycler() {
         var i = 0
         val dataList = arrayListOf<Item>()
         while (i < 20) {
@@ -45,19 +55,12 @@ class FirstScreen : Fragment() {
             firstScreenBinding.recyclerviewMain.adapter = adapter
             adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
-                        communicator = requireActivity() as Communicator
-                        communicator.sendData((listMain[position].id),
-                            listMain[position].name,
-                            listMain[position].description)
+                    communicator = requireActivity() as Communicator
+                    communicator.sendData((listMain[position].id),
+                        listMain[position].name,
+                        listMain[position].description)
                 }
             })
         }
-
     }
-
-    override fun onDestroyView() {
-        listMain.clear()
-        super.onDestroyView()
-    }
-
 }
