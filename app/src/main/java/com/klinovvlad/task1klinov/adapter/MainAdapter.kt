@@ -8,22 +8,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.klinovvlad.task1klinov.databinding.ItemMainBinding
 import com.klinovvlad.task1klinov.model.Item
 
-class MainAdapter : ListAdapter<Item, MainAdapter.TestHolder>(TestUtil()) {
+class MainAdapter : ListAdapter<Item, MainAdapter.MainHolder>(MainUtil()) {
     private lateinit var clickListener: OnItemClickListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestHolder {
-        return TestHolder(ItemMainBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
+        return MainHolder(ItemMainBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false),
             clickListener)
     }
 
-    override fun onBindViewHolder(holder: TestHolder, position: Int) {
+    override fun onBindViewHolder(holder: MainHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class TestHolder(private val binding: ItemMainBinding,
+    class MainHolder(private val binding: ItemMainBinding,
                      private val listener: OnItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Item) {
@@ -36,7 +36,7 @@ class MainAdapter : ListAdapter<Item, MainAdapter.TestHolder>(TestUtil()) {
         }
         }
 
-    class TestUtil : DiffUtil.ItemCallback<Item>() {
+    class MainUtil : DiffUtil.ItemCallback<Item>() {
         override fun areItemsTheSame(oldItem: Item, newItem: Item) = oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: Item, newItem: Item) = oldItem == newItem
