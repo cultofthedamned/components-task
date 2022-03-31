@@ -39,27 +39,24 @@ class FirstScreen : Fragment() {
     }
 
     private fun createRecycler() {
-        var i = 0
         val dataList = arrayListOf<Item>()
-        while (i < 20) {
+        for (i in 0..19) {
             dataList.add(Item(i, "name" + i, "description" + i))
-            i++
         }
         firstScreenBinding.recyclerviewMain.apply {
             firstScreenBinding.recyclerviewMain.layoutManager = LinearLayoutManager(activity)
             firstScreenBinding.recyclerviewMain.setHasFixedSize(true)
             listMain.addAll(dataList)
-            val adapter = MainAdapter()
+            val adapter = MainAdapter(dataList) {
+                communicator = requireActivity() as Communicator
+                communicator.sendData(it.id,
+                    it.name,
+                    it.description)
+            }
             adapter.submitList(listMain)
             firstScreenBinding.recyclerviewMain.adapter = adapter
-            adapter.setOnItemClickListener(object : MainAdapter.OnItemClickListener {
-                override fun onItemClick(position: Int) {
-                    communicator = requireActivity() as Communicator
-                    communicator.sendData((listMain[position].id),
-                        listMain[position].name,
-                        listMain[position].description)
-                }
-            })
         }
     }
+
+
 }

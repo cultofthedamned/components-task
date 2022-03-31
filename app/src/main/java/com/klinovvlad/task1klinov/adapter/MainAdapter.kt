@@ -8,31 +8,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.klinovvlad.task1klinov.databinding.ItemMainBinding
 import com.klinovvlad.task1klinov.model.Item
 
-class MainAdapter : ListAdapter<Item, MainAdapter.MainHolder>(MainUtil()) {
-    private lateinit var clickListener: OnItemClickListener
+class MainAdapter(
+    private val itemList: List<Item>,
+    private val onItemClickLambda: (item: Item) -> Unit) :
+    ListAdapter<Item, MainAdapter.MainHolder>(MainUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(ItemMainBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false),
-            clickListener)
+            false))
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         holder.bind(getItem(position))
+        val data = itemList[position]
+        holder.itemView.setOnClickListener {
+            onItemClickLambda(data)
+        }
     }
 
-    class MainHolder(private val binding: ItemMainBinding,
-                     private val listener: OnItemClickListener) :
+    class MainHolder(private val binding: ItemMainBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Item) {
             binding.recycName.text = item.name
-        }
-        init {
-            itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
         }
         }
 
@@ -40,16 +39,6 @@ class MainAdapter : ListAdapter<Item, MainAdapter.MainHolder>(MainUtil()) {
         override fun areItemsTheSame(oldItem: Item, newItem: Item) = oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: Item, newItem: Item) = oldItem == newItem
-    }
-
-    interface OnItemClickListener {
-
-        fun onItemClick(position: Int)
-
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        clickListener = listener
     }
 }
 
