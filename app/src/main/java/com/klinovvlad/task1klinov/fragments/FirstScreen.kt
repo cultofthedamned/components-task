@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.klinovvlad.task1klinov.adapter.MainAdapter
 import com.klinovvlad.task1klinov.databinding.FragmentFirstScreenBinding
@@ -39,12 +41,18 @@ class FirstScreen : Fragment() {
     }
 
     companion object ItemHolder {
-        private fun returnItemList(): ArrayList<Item> {
-            val dataList = arrayListOf<Item>()
-            for (i in 0..19) {
-                dataList.add(Item(i, "name" + i, "description" + i))
-            }
-            return dataList
+
+        private val items = (0 until 20).map {
+                i -> Item(i, "name" + i, "description" + i)
+        }
+
+        private fun returnItemList(): List<Item> {
+            return items
+        }
+
+        fun receiveItem(clickedItemPosition: Int): String {
+            val currentItem = items.get(clickedItemPosition).toString()
+            return currentItem
         }
     }
 
@@ -56,7 +64,7 @@ class FirstScreen : Fragment() {
             listMain.addAll(returnItemList())
             val mainAdapter = MainAdapter {
                 communicator = requireActivity() as Communicator
-                communicator.onItemClicked(it)
+                communicator.onItemClicked(it.id)
             }
             adapter = mainAdapter
             mainAdapter.submitList(listMain)

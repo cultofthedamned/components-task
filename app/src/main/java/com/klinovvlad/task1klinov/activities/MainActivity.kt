@@ -42,15 +42,16 @@ class MainActivity : AppCompatActivity(), Communicator {
         unregisterReceiver(receiver)
     }
 
-    override fun onItemClicked(item: Item) {
+    override fun onItemClicked(item: Int) {
         val bundle = Bundle()
-        bundle.putString("item", item.toString())
+        val currentItemPosition = FirstScreen.receiveItem(item)
+        bundle.putString("item", currentItemPosition)
         val secondFragment = SecondScreen()
         secondFragment.arguments = bundle
         val sharedPref = getSharedPreferences("mainPref", Context.MODE_PRIVATE)
         sharedPref
             .edit()
-            .putString("idPref", bundle.getString("item"))
+            .putInt("idPref", item)
             .apply()
         this.supportFragmentManager
             .beginTransaction()
