@@ -13,7 +13,6 @@ import com.klinovvlad.task1klinov.model.Item
 
 class FirstScreen : Fragment() {
     private lateinit var firstScreenBinding: FragmentFirstScreenBinding
-    private lateinit var communicator: Communicator
     private var listMain: ArrayList<Item> = ArrayList()
 
     override fun onCreateView(
@@ -39,27 +38,28 @@ class FirstScreen : Fragment() {
         super.onDestroyView()
     }
 
-    private fun createRecycler() {
-        val dataList = arrayListOf<Item>()
-        for (i in 0..19) {
-            dataList.add(Item(i, "name" + i, "description" + i))
-        }
-        firstScreenBinding.recyclerviewMain.apply {
-            firstScreenBinding.recyclerviewMain.layoutManager = LinearLayoutManager(activity)
-            firstScreenBinding.recyclerviewMain.setHasFixedSize(true)
-            listMain.addAll(dataList)
-            val adapter = MainAdapter {
-                communicator = requireActivity() as Communicator
-                communicator.sendData(
-                    it.id,
-                    it.name,
-                    it.description
-                )
+    companion object ItemHolder {
+        private fun returnItemList(): ArrayList<Item> {
+            val dataList = arrayListOf<Item>()
+            for (i in 0..19) {
+                dataList.add(Item(i, "name" + i, "description" + i))
             }
-            adapter.submitList(listMain)
-            firstScreenBinding.recyclerviewMain.adapter = adapter
+            return dataList
         }
     }
 
-
+    private fun createRecycler() {
+        var communicator: Communicator
+        firstScreenBinding.recyclerviewMain.apply {
+            layoutManager = LinearLayoutManager(activity)
+            setHasFixedSize(true)
+            listMain.addAll(returnItemList())
+            val mainAdapter = MainAdapter {
+                communicator = requireActivity() as Communicator
+                communicator.onItemClicked(it)
+            }
+            adapter = mainAdapter
+            mainAdapter.submitList(listMain)
+        }
+    }
 }

@@ -8,22 +8,22 @@ import android.view.ViewGroup
 import com.klinovvlad.task1klinov.databinding.FragmentSecondScreenBinding
 
 class SecondScreen : Fragment() {
-    private lateinit var second_screen_binding: FragmentSecondScreenBinding
+    private lateinit var secondScreenBinding: FragmentSecondScreenBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        second_screen_binding = FragmentSecondScreenBinding.inflate(
+        secondScreenBinding = FragmentSecondScreenBinding.inflate(
             inflater,
             container,
             false
         )
+        return secondScreenBinding.root
+    }
 
-        second_screen_binding.textViewSecond1.text = arguments?.getString("id")
-        second_screen_binding.textViewSecond2.text = arguments?.getString("name")
-        second_screen_binding.textViewSecond3.text = arguments?.getString("description")
-
-        return second_screen_binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        secondScreenBinding.textViewSecondId.text = arguments?.getString("item")
     }
 }

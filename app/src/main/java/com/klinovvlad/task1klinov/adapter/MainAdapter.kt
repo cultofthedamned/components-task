@@ -10,8 +10,7 @@ import com.klinovvlad.task1klinov.model.Item
 
 class MainAdapter(
     private val onItemClickLambda: (item: Item) -> Unit
-) :
-    ListAdapter<Item, MainAdapter.MainHolder>(MainUtil()) {
+) : ListAdapter<Item, MainAdapter.MainHolder>(MainUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(
@@ -24,24 +23,23 @@ class MainAdapter(
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        holder.bind(getItem(position))
-        val data = currentList[position]
-        holder.itemView.setOnClickListener {
-            onItemClickLambda(data)
-        }
+        holder.bind(currentList[position], onItemClickLambda)
     }
 
-    class MainHolder(private val binding: ItemMainBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Item) {
-            binding.recycName.text = item.name
+    class MainHolder(private val binding: ItemMainBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Item, onItemClickLambda: (item: Item) -> Unit) {
+            binding.textItemName.text = item.name
+            binding.root.setOnClickListener {
+                onItemClickLambda(item)
+            }
         }
     }
 
     class MainUtil : DiffUtil.ItemCallback<Item>() {
-        override fun areItemsTheSame(oldItem: Item, newItem: Item) = oldItem.id == newItem.id
+        override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean =
+            oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Item, newItem: Item) = oldItem == newItem
+        override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean =
+            oldItem == newItem
     }
 }
-

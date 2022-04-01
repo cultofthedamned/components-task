@@ -1,7 +1,9 @@
 package com.klinovvlad.task1klinov.fragments.communicator
 
+import com.klinovvlad.task1klinov.model.Item
+
 interface Communicator {
 
-    fun sendData(id: Int, name: String, description: String)
+    fun onItemClicked(item: Item)
 
 }

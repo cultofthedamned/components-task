@@ -7,27 +7,27 @@
     tools:context=".fragments.SecondScreen">
 
     <TextView
-        android:id="@+id/textView_second_1"
+        android:id="@+id/textView_second_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:text="TextView"
-        android:textSize="30dp" />
+        android:paddingStart="10dp"
+        android:text=""
+        android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/textView_second_2"
+        android:id="@+id/textView_second_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:text="TextView"
-        android:textSize="30dp" />
+        android:paddingStart="10dp"
+        android:text=""
+        android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/textView_second_3"
+        android:id="@+id/textView_second_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:text="TextView"
-        android:textSize="30dp" />
+        android:paddingStart="10dp"
+        android:text=""
+        android:textSize="30sp" />
 
 </LinearLayout>
