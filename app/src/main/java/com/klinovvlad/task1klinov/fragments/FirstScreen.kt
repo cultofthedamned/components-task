@@ -50,8 +50,8 @@ class FirstScreen : Fragment() {
             return items
         }
 
-        fun receiveItem(clickedItemPosition: Int): String {
-            val currentItem = items.get(clickedItemPosition).toString()
+        fun receiveItem(clickedItemPosition: Int): Item {
+            val currentItem = items[clickedItemPosition]
             return currentItem
         }
     }

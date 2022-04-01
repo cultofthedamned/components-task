@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), Communicator {
     override fun onItemClicked(item: Int) {
         val bundle = Bundle()
         val currentItemPosition = FirstScreen.receiveItem(item)
-        bundle.putString("item", currentItemPosition)
+        bundle.putString("item", currentItemPosition.toString())
         val secondFragment = SecondScreen()
         secondFragment.arguments = bundle
         val sharedPref = getSharedPreferences("mainPref", Context.MODE_PRIVATE)
