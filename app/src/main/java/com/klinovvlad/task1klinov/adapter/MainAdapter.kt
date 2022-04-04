@@ -9,7 +9,7 @@ import com.klinovvlad.task1klinov.databinding.ItemMainBinding
 import com.klinovvlad.task1klinov.model.Item
 
 class MainAdapter(
-    private val onItemClickLambda: (item: Item) -> Unit
+    private val onItemClick: (item: Item) -> Unit
 ) : ListAdapter<Item, MainAdapter.MainHolder>(MainUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -23,14 +23,14 @@ class MainAdapter(
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        holder.bind(currentList[position], onItemClickLambda)
+        holder.bind(currentList[position], onItemClick)
     }
 
     class MainHolder(private val binding: ItemMainBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Item, onItemClickLambda: (item: Item) -> Unit) {
+        fun bind(item: Item, onItemClick: (item: Item) -> Unit) {
             binding.textItemName.text = item.name
             binding.root.setOnClickListener {
-                onItemClickLambda(item)
+                onItemClick(item)
             }
         }
     }

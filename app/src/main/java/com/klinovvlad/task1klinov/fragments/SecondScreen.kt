@@ -24,6 +24,9 @@ class SecondScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        secondScreenBinding.textViewSecondId.text = arguments?.getString("item")
+        val id = ItemHolder().receiveItem(requireArguments().getInt("item"))
+        secondScreenBinding.textViewSecondId.text = id?.id.toString()
+        secondScreenBinding.textViewSecondName.text = id?.name
+        secondScreenBinding.textViewSecondDescription.text = id?.description
     }
 }

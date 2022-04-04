@@ -15,7 +15,6 @@ import com.klinovvlad.task1klinov.model.Item
 
 class FirstScreen : Fragment() {
     private lateinit var firstScreenBinding: FragmentFirstScreenBinding
-    private var listMain: ArrayList<Item> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,39 +34,17 @@ class FirstScreen : Fragment() {
         createRecycler()
     }
 
-    override fun onDestroyView() {
-        listMain.clear()
-        super.onDestroyView()
-    }
-
-    companion object ItemHolder {
-
-        private val items = (0 until 20).map {
-                i -> Item(i, "name" + i, "description" + i)
-        }
-
-        private fun returnItemList(): List<Item> {
-            return items
-        }
-
-        fun receiveItem(clickedItemPosition: Int): Item {
-            val currentItem = items[clickedItemPosition]
-            return currentItem
-        }
-    }
-
     private fun createRecycler() {
         var communicator: Communicator
         firstScreenBinding.recyclerviewMain.apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
-            listMain.addAll(returnItemList())
             val mainAdapter = MainAdapter {
                 communicator = requireActivity() as Communicator
                 communicator.onItemClicked(it.id)
             }
             adapter = mainAdapter
-            mainAdapter.submitList(listMain)
+            mainAdapter.submitList(ItemHolder().returnItemList())
         }
     }
 }
