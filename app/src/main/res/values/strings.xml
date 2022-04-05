@@ -4,4 +4,5 @@
     <string name="main_service_content_title"
         >Сlick on this notification to go to the latest item</string>
     <string name="main_service_content_text">Just text below</string>
+    <string name="main_service_channel_name">ForegroundService</string>
 </resources>

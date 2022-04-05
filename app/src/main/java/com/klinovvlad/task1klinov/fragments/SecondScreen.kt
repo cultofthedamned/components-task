@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.klinovvlad.task1klinov.databinding.FragmentSecondScreenBinding
-import com.klinovvlad.task1klinov.model.BUNDLE_ITEM
 import com.klinovvlad.task1klinov.model.ItemHolder
+import com.klinovvlad.task1klinov.utils.BUNDLE_KEY_ID
 
 class SecondScreen : Fragment() {
     private lateinit var secondScreenBinding: FragmentSecondScreenBinding
@@ -26,7 +26,7 @@ class SecondScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val item = ItemHolder().receiveItem(requireArguments().getInt(BUNDLE_ITEM))
+        val item = ItemHolder().receiveItem(requireArguments().getInt(BUNDLE_KEY_ID))
         secondScreenBinding.textViewSecondId.text = item?.id.toString()
         secondScreenBinding.textViewSecondName.text = item?.name
         secondScreenBinding.textViewSecondDescription.text = item?.description

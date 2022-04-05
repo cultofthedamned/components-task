@@ -6,10 +6,10 @@ import com.klinovvlad.task1klinov.R
 import com.klinovvlad.task1klinov.databinding.ActivityMainBinding
 import com.klinovvlad.task1klinov.fragments.FirstScreen
 import com.klinovvlad.task1klinov.fragments.SecondScreen
-import com.klinovvlad.task1klinov.model.BUNDLE_ITEM
-import com.klinovvlad.task1klinov.model.TWENTY
-import com.klinovvlad.task1klinov.model.ID_EXTRA_KEY
 import com.klinovvlad.task1klinov.service.MainService
+import com.klinovvlad.task1klinov.utils.BUNDLE_KEY_ID
+import com.klinovvlad.task1klinov.utils.ID_EXTRA_KEY
+import com.klinovvlad.task1klinov.utils.DEFAULT_ID_EXTRA_VALUE
 
 class MainActivity : AppCompatActivity()     {
     private lateinit var binding: ActivityMainBinding
@@ -27,11 +27,11 @@ class MainActivity : AppCompatActivity()     {
             .addToBackStack(null)
             .commit()
 
-        val idExtra = intent.getIntExtra(ID_EXTRA_KEY, TWENTY)
+        val idExtra = intent.getIntExtra(ID_EXTRA_KEY, DEFAULT_ID_EXTRA_VALUE)
 
-        if (idExtra != TWENTY) {
+        if (idExtra != DEFAULT_ID_EXTRA_VALUE) {
             val bundle = Bundle()
-            bundle.putInt(BUNDLE_ITEM, idExtra)
+            bundle.putInt(BUNDLE_KEY_ID, idExtra)
             val secondFragment = SecondScreen()
             secondFragment.arguments = bundle
             supportFragmentManager

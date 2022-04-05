@@ -11,11 +11,10 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.klinovvlad.task1klinov.R
-import com.klinovvlad.task1klinov.model.CHANNEL_ID
-import com.klinovvlad.task1klinov.model.MAINSERVICE_NOTIFICATIONCHANNEL_NAME
-import com.klinovvlad.task1klinov.model.ONE
-import com.klinovvlad.task1klinov.model.ZERO
 import com.klinovvlad.task1klinov.receiver.MainReceiver
+import com.klinovvlad.task1klinov.utils.MAINSERVICE_NOTIFICATIONCHANNEL_NAME
+import com.klinovvlad.task1klinov.utils.NOTIFICATION_ID
+import com.klinovvlad.task1klinov.utils.REQUESTCODE_ZERO
 
 class MainService : Service() {
 
@@ -24,17 +23,20 @@ class MainService : Service() {
         createNotificationChannel()
         val pendingIntent = PendingIntent.getBroadcast(
             this,
-            ZERO,
+            REQUESTCODE_ZERO,
             notificationIntent,
             0
         )
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        val notification = NotificationCompat.Builder(
+            this,
+            getString(R.string.main_service_channel_name)
+        )
             .setContentTitle(getString(R.string.main_service_content_title))
             .setContentText(getString(R.string.main_service_content_text))
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentIntent(pendingIntent)
             .build()
-        startForeground(ONE, notification)
+        startForeground(NOTIFICATION_ID, notification)
         return START_NOT_STICKY
     }
 
@@ -45,7 +47,7 @@ class MainService : Service() {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(
-                CHANNEL_ID, MAINSERVICE_NOTIFICATIONCHANNEL_NAME,
+                getString(R.string.main_service_channel_name), MAINSERVICE_NOTIFICATIONCHANNEL_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             val manager = getSystemService(NotificationManager::class.java)
