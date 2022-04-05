@@ -8,7 +8,7 @@ import com.klinovvlad.task1klinov.fragments.FirstScreen
 import com.klinovvlad.task1klinov.fragments.SecondScreen
 import com.klinovvlad.task1klinov.service.MainService
 import com.klinovvlad.task1klinov.utils.BUNDLE_KEY_ID
-import com.klinovvlad.task1klinov.utils.ID_EXTRA_KEY
+import com.klinovvlad.task1klinov.utils.PREF_ID_EXTRA_KEY
 import com.klinovvlad.task1klinov.utils.DEFAULT_ID_EXTRA_VALUE
 
 class MainActivity : AppCompatActivity()     {
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity()     {
             .addToBackStack(null)
             .commit()
 
-        val idExtra = intent.getIntExtra(ID_EXTRA_KEY, DEFAULT_ID_EXTRA_VALUE)
+        val idExtra = intent.getIntExtra(PREF_ID_EXTRA_KEY, DEFAULT_ID_EXTRA_VALUE)
 
         if (idExtra != DEFAULT_ID_EXTRA_VALUE) {
             val bundle = Bundle()
