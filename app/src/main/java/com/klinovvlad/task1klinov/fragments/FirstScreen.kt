@@ -1,17 +1,15 @@
 package com.klinovvlad.task1klinov.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.klinovvlad.task1klinov.R
 import com.klinovvlad.task1klinov.adapter.MainAdapter
 import com.klinovvlad.task1klinov.databinding.FragmentFirstScreenBinding
-import com.klinovvlad.task1klinov.fragments.communicator.Communicator
-import com.klinovvlad.task1klinov.model.Item
 
 class FirstScreen : Fragment() {
     private lateinit var firstScreenBinding: FragmentFirstScreenBinding
@@ -35,13 +33,27 @@ class FirstScreen : Fragment() {
     }
 
     private fun createRecycler() {
-        var communicator: Communicator
         firstScreenBinding.recyclerviewMain.apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
             val mainAdapter = MainAdapter {
-                communicator = requireActivity() as Communicator
-                communicator.onItemClicked(it.id)
+                val bundle = Bundle()
+                bundle.putInt("item", it.id)
+                val secondFragment = SecondScreen()
+                secondFragment.arguments = bundle
+                activity?.supportFragmentManager
+                    ?.beginTransaction()
+                    ?.replace(R.id.main_frame, secondFragment)
+                    ?.addToBackStack(null)
+                    ?.commit()
+                val sharedPref = activity?.getSharedPreferences(
+                    "mainPrefKey",
+                    Context.MODE_PRIVATE
+                )
+                sharedPref
+                    ?.edit()
+                    ?.putInt("idPrefKey", it.id)
+                    ?.apply()
             }
             adapter = mainAdapter
             mainAdapter.submitList(ItemHolder().returnItemList())

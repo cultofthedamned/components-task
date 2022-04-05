@@ -4,15 +4,15 @@ import com.klinovvlad.task1klinov.model.Item
 
 class ItemHolder {
 
-    private val items = (0 until 20).map {
-            i -> Item(i, "name $i", "description $i")
+    private val items = (0 until 20).map { i ->
+        Item(i, "name $i", "description $i")
     }
 
     fun returnItemList(): List<Item> {
         return items
     }
 
-    fun receiveItem(clickedItemPosition: Int): Item? {
-        return items.find { it.id == clickedItemPosition }
+    fun receiveItem(elementId: Int): Item? {
+        return items.find { it.id == elementId }
     }
 }
