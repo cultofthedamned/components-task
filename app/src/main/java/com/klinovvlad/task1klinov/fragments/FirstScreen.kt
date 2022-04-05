@@ -10,6 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.klinovvlad.task1klinov.R
 import com.klinovvlad.task1klinov.adapter.MainAdapter
 import com.klinovvlad.task1klinov.databinding.FragmentFirstScreenBinding
+import com.klinovvlad.task1klinov.model.BUNDLE_ITEM
+import com.klinovvlad.task1klinov.model.ID_PREF_KEY
+import com.klinovvlad.task1klinov.model.ItemHolder
+import com.klinovvlad.task1klinov.model.MAIN_PREF_KEY
 
 class FirstScreen : Fragment() {
     private lateinit var firstScreenBinding: FragmentFirstScreenBinding
@@ -38,7 +42,7 @@ class FirstScreen : Fragment() {
             setHasFixedSize(true)
             val mainAdapter = MainAdapter {
                 val bundle = Bundle()
-                bundle.putInt("item", it.id)
+                bundle.putInt(BUNDLE_ITEM, it.id)
                 val secondFragment = SecondScreen()
                 secondFragment.arguments = bundle
                 activity?.supportFragmentManager
@@ -47,16 +51,16 @@ class FirstScreen : Fragment() {
                     ?.addToBackStack(null)
                     ?.commit()
                 val sharedPref = activity?.getSharedPreferences(
-                    "mainPrefKey",
+                    MAIN_PREF_KEY,
                     Context.MODE_PRIVATE
                 )
                 sharedPref
                     ?.edit()
-                    ?.putInt("idPrefKey", it.id)
+                    ?.putInt(ID_PREF_KEY, it.id)
                     ?.apply()
             }
             adapter = mainAdapter
-            mainAdapter.submitList(ItemHolder().returnItemList())
+            mainAdapter.submitList(ItemHolder().getItems())
         }
     }
 }

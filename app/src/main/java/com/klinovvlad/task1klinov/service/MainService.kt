@@ -11,9 +11,11 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.klinovvlad.task1klinov.R
+import com.klinovvlad.task1klinov.model.CHANNEL_ID
+import com.klinovvlad.task1klinov.model.MAINSERVICE_NOTIFICATIONCHANNEL_NAME
+import com.klinovvlad.task1klinov.model.ONE
+import com.klinovvlad.task1klinov.model.ZERO
 import com.klinovvlad.task1klinov.receiver.MainReceiver
-
-const val CHANNEL_ID = "ForegroundService"
 
 class MainService : Service() {
 
@@ -22,17 +24,17 @@ class MainService : Service() {
         createNotificationChannel()
         val pendingIntent = PendingIntent.getBroadcast(
             this,
-            0,
+            ZERO,
             notificationIntent,
             0
         )
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Сlick on this notification to go to the latest item")
-            .setContentText("Just text below")
+            .setContentTitle(getString(R.string.main_service_content_title))
+            .setContentText(getString(R.string.main_service_content_text))
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentIntent(pendingIntent)
             .build()
-        startForeground(1, notification)
+        startForeground(ONE, notification)
         return START_NOT_STICKY
     }
 
@@ -43,7 +45,7 @@ class MainService : Service() {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(
-                CHANNEL_ID, "Foreground Service Channel",
+                CHANNEL_ID, MAINSERVICE_NOTIFICATIONCHANNEL_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             val manager = getSystemService(NotificationManager::class.java)

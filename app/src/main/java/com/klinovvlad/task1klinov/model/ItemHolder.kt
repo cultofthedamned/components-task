@@ -1,6 +1,4 @@
-package com.klinovvlad.task1klinov.fragments
-
-import com.klinovvlad.task1klinov.model.Item
+package com.klinovvlad.task1klinov.model
 
 class ItemHolder {
 
@@ -8,7 +6,7 @@ class ItemHolder {
         Item(i, "name $i", "description $i")
     }
 
-    fun returnItemList(): List<Item> {
+    fun getItems(): List<Item> {
         return items
     }
 

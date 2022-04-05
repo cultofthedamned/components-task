@@ -2,11 +2,13 @@ package com.klinovvlad.task1klinov.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.klinovvlad.task1klinov.R
 import com.klinovvlad.task1klinov.databinding.ActivityMainBinding
 import com.klinovvlad.task1klinov.fragments.FirstScreen
 import com.klinovvlad.task1klinov.fragments.SecondScreen
+import com.klinovvlad.task1klinov.model.BUNDLE_ITEM
+import com.klinovvlad.task1klinov.model.TWENTY
+import com.klinovvlad.task1klinov.model.ID_EXTRA_KEY
 import com.klinovvlad.task1klinov.service.MainService
 
 class MainActivity : AppCompatActivity()     {
@@ -19,27 +21,22 @@ class MainActivity : AppCompatActivity()     {
 
         MainService.startService(this)
 
-        val idExtra = intent.getIntExtra("idExtraKey", 0)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_frame, FirstScreen())
+            .addToBackStack(null)
+            .commit()
 
-        if (idExtra != 0) {
+        val idExtra = intent.getIntExtra(ID_EXTRA_KEY, TWENTY)
+
+        if (idExtra != TWENTY) {
             val bundle = Bundle()
-            bundle.putInt("item", idExtra)
+            bundle.putInt(BUNDLE_ITEM, idExtra)
             val secondFragment = SecondScreen()
             secondFragment.arguments = bundle
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_frame, FirstScreen())
-                .addToBackStack(null)
-                .commit()
-            supportFragmentManager
-                .beginTransaction()
                 .replace(R.id.main_frame, secondFragment)
-                .addToBackStack(null)
-                .commit()
-        } else {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.main_frame, FirstScreen())
                 .addToBackStack(null)
                 .commit()
         }
