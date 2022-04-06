@@ -1,4 +1,4 @@
-package com.klinovvlad.task1klinov.model
+package com.klinovvlad.task1klinov.mvp.model
 
 class ItemHolder {
 

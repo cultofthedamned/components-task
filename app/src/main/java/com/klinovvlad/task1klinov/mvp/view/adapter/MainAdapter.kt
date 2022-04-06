@@ -1,4 +1,4 @@
-package com.klinovvlad.task1klinov.adapter
+package com.klinovvlad.task1klinov.mvp.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.klinovvlad.task1klinov.databinding.ItemMainBinding
-import com.klinovvlad.task1klinov.model.Item
+import com.klinovvlad.task1klinov.mvp.model.Item
 
 class MainAdapter(
     private val onItemClick: (item: Item) -> Unit

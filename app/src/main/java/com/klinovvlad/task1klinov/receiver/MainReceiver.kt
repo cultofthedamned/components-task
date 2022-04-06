@@ -3,7 +3,7 @@ package com.klinovvlad.task1klinov.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.klinovvlad.task1klinov.activities.MainActivity
+import com.klinovvlad.task1klinov.mvp.view.ui.activities.MainActivity
 import com.klinovvlad.task1klinov.utils.PREF_ID_EXTRA_KEY
 import com.klinovvlad.task1klinov.utils.PREF_KEY_ID
 import com.klinovvlad.task1klinov.utils.MAIN_PREF_KEY

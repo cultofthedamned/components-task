@@ -22,7 +22,7 @@
         </receiver>
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".mvp.view.ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
