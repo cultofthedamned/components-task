@@ -24,9 +24,19 @@ class SecondScreen : Fragment(), SecondScreenView {
             container,
             false
         )
-        secondScreenPresenter = SecondScreenPresenter(this)
-        secondScreenPresenter.showItem(requireArguments().getInt(BUNDLE_KEY_ID))
+        secondScreenPresenter = SecondScreenPresenter()
         return secondScreenBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        secondScreenPresenter.attachView(this)
+        secondScreenPresenter.showItem(requireArguments().getInt(BUNDLE_KEY_ID))
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        secondScreenPresenter.detachView()
+        super.onDestroyView()
     }
 
     override fun getData(item: Item) {

@@ -11,8 +11,8 @@ import com.klinovvlad.task1klinov.R
 import com.klinovvlad.task1klinov.mvp.view.adapter.MainAdapter
 import com.klinovvlad.task1klinov.databinding.FragmentFirstScreenBinding
 import com.klinovvlad.task1klinov.mvp.model.Item
-import com.klinovvlad.task1klinov.mvp.presenter.FirstScreenView
 import com.klinovvlad.task1klinov.mvp.presenter.FirstScreenPresenter
+import com.klinovvlad.task1klinov.mvp.presenter.FirstScreenView
 import com.klinovvlad.task1klinov.utils.BUNDLE_KEY_ID
 import com.klinovvlad.task1klinov.utils.PREF_KEY_ID
 import com.klinovvlad.task1klinov.utils.MAIN_PREF_KEY
@@ -20,7 +20,7 @@ import com.klinovvlad.task1klinov.utils.MAIN_PREF_KEY
 class FirstScreen : Fragment(), FirstScreenView {
     private lateinit var firstScreenBinding: FragmentFirstScreenBinding
     private lateinit var mainAdapter: MainAdapter
-    private lateinit var mainPresenter: FirstScreenPresenter
+    private lateinit var firstScreenPresenter: FirstScreenPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,12 +31,13 @@ class FirstScreen : Fragment(), FirstScreenView {
             container,
             false
         )
-        mainPresenter = FirstScreenPresenter(this)
+        firstScreenPresenter = FirstScreenPresenter()
         return firstScreenBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        firstScreenPresenter.attachView(this)
         firstScreenBinding.recyclerviewMain.apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
@@ -53,15 +54,23 @@ class FirstScreen : Fragment(), FirstScreenView {
                 val sharedPref = activity?.getSharedPreferences(MAIN_PREF_KEY, Context.MODE_PRIVATE)
                 sharedPref
                     ?.edit()
-                    ?.putInt(PREF_KEY_ID, it.id)
+                    ?.putInt(PREF_KEY_ID, firstScreenPresenter.callSaveId(it.id))
                     ?.apply()
             }
             adapter = mainAdapter
-            mainPresenter.callData()
+            firstScreenPresenter.callData()
         }
     }
 
+    override fun onDestroyView() {
+        firstScreenPresenter.detachView()
+        super.onDestroyView()
+    }
     override fun showItems(items: List<Item>) {
         mainAdapter.submitList(items)
+    }
+
+    override fun saveId(id: Int): Int {
+        return id
     }
 }
