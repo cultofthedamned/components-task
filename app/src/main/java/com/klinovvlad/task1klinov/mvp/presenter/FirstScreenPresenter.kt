@@ -1,6 +1,5 @@
 package com.klinovvlad.task1klinov.mvp.presenter
 
-import android.view.View
 import com.klinovvlad.task1klinov.mvp.model.ItemHolder
 
 class FirstScreenPresenter {
