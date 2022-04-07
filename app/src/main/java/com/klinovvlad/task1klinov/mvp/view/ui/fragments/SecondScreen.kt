@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.klinovvlad.task1klinov.databinding.FragmentSecondScreenBinding
-import com.klinovvlad.task1klinov.mvp.model.ItemHolder
+import com.klinovvlad.task1klinov.mvp.model.Item
+import com.klinovvlad.task1klinov.mvp.presenter.SecondScreenPresenter
+import com.klinovvlad.task1klinov.mvp.presenter.SecondView
 import com.klinovvlad.task1klinov.utils.BUNDLE_KEY_ID
 
-class SecondScreen : Fragment() {
+class SecondScreen : Fragment(), SecondView {
     private lateinit var secondScreenBinding: FragmentSecondScreenBinding
+    private lateinit var secondScreenPresenter: SecondScreenPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,14 +24,15 @@ class SecondScreen : Fragment() {
             container,
             false
         )
+        secondScreenPresenter = SecondScreenPresenter(this)
+        secondScreenPresenter.showItem(requireArguments().getInt(BUNDLE_KEY_ID))
         return secondScreenBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val item = ItemHolder().receiveItem(requireArguments().getInt(BUNDLE_KEY_ID))
-        secondScreenBinding.textViewSecondId.text = item?.id.toString()
-        secondScreenBinding.textViewSecondName.text = item?.name
-        secondScreenBinding.textViewSecondDescription.text = item?.description
+    override fun getData(item: Item) {
+        secondScreenBinding.textViewSecondId.text = item.id.toString()
+        secondScreenBinding.textViewSecondName.text = item.name
+        secondScreenBinding.textViewSecondDescription.text = item.description
     }
+
 }

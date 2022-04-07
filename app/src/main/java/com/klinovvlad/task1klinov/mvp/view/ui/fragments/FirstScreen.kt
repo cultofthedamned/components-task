@@ -19,7 +19,8 @@ import com.klinovvlad.task1klinov.utils.MAIN_PREF_KEY
 
 class FirstScreen : Fragment(), ItemView {
     private lateinit var firstScreenBinding: FragmentFirstScreenBinding
-    private var mainPresenter: MainPresenter? = null
+    private lateinit var mainAdapter: MainAdapter
+    private lateinit var mainPresenter: MainPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,14 +32,19 @@ class FirstScreen : Fragment(), ItemView {
             false
         )
         mainPresenter = MainPresenter(this)
+        mainPresenter.callData()
         return firstScreenBinding.root
     }
 
-    override fun showItemView(items: List<Item>) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun showItems(items: List<Item>) {
         firstScreenBinding.recyclerviewMain.apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
-            val mainAdapter = MainAdapter {
+            mainAdapter = MainAdapter {
                 val bundle = Bundle()
                 bundle.putInt(BUNDLE_KEY_ID, it.id)
                 val secondFragment = SecondScreen()
@@ -55,7 +61,7 @@ class FirstScreen : Fragment(), ItemView {
                     ?.apply()
             }
             adapter = mainAdapter
-            mainAdapter.submitList(items)
         }
+        mainAdapter.submitList(items)
     }
 }

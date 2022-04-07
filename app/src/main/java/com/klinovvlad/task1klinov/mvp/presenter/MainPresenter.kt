@@ -1,20 +1,11 @@
 package com.klinovvlad.task1klinov.mvp.presenter
 
-import com.klinovvlad.task1klinov.mvp.model.Item
+import com.klinovvlad.task1klinov.mvp.model.ItemHolder
 
-class MainPresenter(private val mainView: ItemView) : MainModel.FetchItems {
+class MainPresenter(private val mainView: ItemView) {
 
-    private val itemModel: ItemModel
-    private var itemModelList: List<Item>? = null
-
-    init {
-        itemModel = MainModel(this)
-        itemModel.getItems()
-    }
-
-    override fun showItems(data: List<Item>) {
-        itemModelList = data
-        mainView.showItemView(itemModelList!!)
+    fun callData() {
+        mainView.showItems(ItemHolder().getItems())
     }
 
 }
