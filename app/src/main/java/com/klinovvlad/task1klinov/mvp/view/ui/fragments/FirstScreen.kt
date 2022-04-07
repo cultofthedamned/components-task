@@ -11,16 +11,16 @@ import com.klinovvlad.task1klinov.R
 import com.klinovvlad.task1klinov.mvp.view.adapter.MainAdapter
 import com.klinovvlad.task1klinov.databinding.FragmentFirstScreenBinding
 import com.klinovvlad.task1klinov.mvp.model.Item
-import com.klinovvlad.task1klinov.mvp.presenter.ItemView
-import com.klinovvlad.task1klinov.mvp.presenter.MainPresenter
+import com.klinovvlad.task1klinov.mvp.presenter.FirstScreenView
+import com.klinovvlad.task1klinov.mvp.presenter.FirstScreenPresenter
 import com.klinovvlad.task1klinov.utils.BUNDLE_KEY_ID
 import com.klinovvlad.task1klinov.utils.PREF_KEY_ID
 import com.klinovvlad.task1klinov.utils.MAIN_PREF_KEY
 
-class FirstScreen : Fragment(), ItemView {
+class FirstScreen : Fragment(), FirstScreenView {
     private lateinit var firstScreenBinding: FragmentFirstScreenBinding
     private lateinit var mainAdapter: MainAdapter
-    private lateinit var mainPresenter: MainPresenter
+    private lateinit var mainPresenter: FirstScreenPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,16 +31,12 @@ class FirstScreen : Fragment(), ItemView {
             container,
             false
         )
-        mainPresenter = MainPresenter(this)
-        mainPresenter.callData()
+        mainPresenter = FirstScreenPresenter(this)
         return firstScreenBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun showItems(items: List<Item>) {
         firstScreenBinding.recyclerviewMain.apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
@@ -61,7 +57,11 @@ class FirstScreen : Fragment(), ItemView {
                     ?.apply()
             }
             adapter = mainAdapter
+            mainPresenter.callData()
         }
+    }
+
+    override fun showItems(items: List<Item>) {
         mainAdapter.submitList(items)
     }
 }

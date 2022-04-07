@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import com.klinovvlad.task1klinov.databinding.FragmentSecondScreenBinding
 import com.klinovvlad.task1klinov.mvp.model.Item
 import com.klinovvlad.task1klinov.mvp.presenter.SecondScreenPresenter
-import com.klinovvlad.task1klinov.mvp.presenter.SecondView
+import com.klinovvlad.task1klinov.mvp.presenter.SecondScreenView
 import com.klinovvlad.task1klinov.utils.BUNDLE_KEY_ID
 
-class SecondScreen : Fragment(), SecondView {
+class SecondScreen : Fragment(), SecondScreenView {
     private lateinit var secondScreenBinding: FragmentSecondScreenBinding
     private lateinit var secondScreenPresenter: SecondScreenPresenter
 
