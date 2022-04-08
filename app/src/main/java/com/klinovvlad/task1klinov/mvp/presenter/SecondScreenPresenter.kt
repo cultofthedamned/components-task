@@ -7,7 +7,7 @@ class SecondScreenPresenter {
     private var secondView: SecondScreenView? = null
 
     fun showItem(data: Int) {
-        secondView?.getData(ItemHolder().receiveItem(data)!!)
+        ItemHolder().receiveItem(data)?.also { secondView?.showItemDetails(it) }
     }
 
     fun attachView(view: SecondScreenView) {

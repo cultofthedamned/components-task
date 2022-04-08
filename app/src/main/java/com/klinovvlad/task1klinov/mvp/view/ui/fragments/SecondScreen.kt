@@ -13,7 +13,9 @@ import com.klinovvlad.task1klinov.utils.BUNDLE_KEY_ID
 
 class SecondScreen : Fragment(), SecondScreenView {
     private lateinit var secondScreenBinding: FragmentSecondScreenBinding
-    private lateinit var secondScreenPresenter: SecondScreenPresenter
+    private val secondScreenPresenter: SecondScreenPresenter by lazy {
+        SecondScreenPresenter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,7 +26,7 @@ class SecondScreen : Fragment(), SecondScreenView {
             container,
             false
         )
-        secondScreenPresenter = SecondScreenPresenter()
+        secondScreenPresenter
         return secondScreenBinding.root
     }
 
@@ -39,7 +41,7 @@ class SecondScreen : Fragment(), SecondScreenView {
         super.onDestroyView()
     }
 
-    override fun getData(item: Item) {
+    override fun showItemDetails(item: Item) {
         secondScreenBinding.textViewSecondId.text = item.id.toString()
         secondScreenBinding.textViewSecondName.text = item.name
         secondScreenBinding.textViewSecondDescription.text = item.description

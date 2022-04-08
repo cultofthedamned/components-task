@@ -19,8 +19,25 @@ import com.klinovvlad.task1klinov.utils.MAIN_PREF_KEY
 
 class FirstScreen : Fragment(), FirstScreenView {
     private lateinit var firstScreenBinding: FragmentFirstScreenBinding
-    private lateinit var mainAdapter: MainAdapter
-    private lateinit var firstScreenPresenter: FirstScreenPresenter
+    private val mainAdapter: MainAdapter by lazy { MainAdapter {
+        val bundle = Bundle()
+        bundle.putInt(BUNDLE_KEY_ID, it.id)
+        val secondFragment = SecondScreen()
+        secondFragment.arguments = bundle
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.main_frame, secondFragment)
+            ?.addToBackStack(null)
+            ?.commit()
+        val sharedPref = activity?.getSharedPreferences(MAIN_PREF_KEY, Context.MODE_PRIVATE)
+        sharedPref
+            ?.edit()
+            ?.putInt(PREF_KEY_ID, firstScreenPresenter.callSaveId(it.id))
+            ?.apply()
+    } }
+    private val firstScreenPresenter: FirstScreenPresenter by lazy {
+        FirstScreenPresenter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +48,7 @@ class FirstScreen : Fragment(), FirstScreenView {
             container,
             false
         )
-        firstScreenPresenter = FirstScreenPresenter()
+        firstScreenPresenter
         return firstScreenBinding.root
     }
 
@@ -41,22 +58,6 @@ class FirstScreen : Fragment(), FirstScreenView {
         firstScreenBinding.recyclerviewMain.apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
-            mainAdapter = MainAdapter {
-                val bundle = Bundle()
-                bundle.putInt(BUNDLE_KEY_ID, it.id)
-                val secondFragment = SecondScreen()
-                secondFragment.arguments = bundle
-                activity?.supportFragmentManager
-                    ?.beginTransaction()
-                    ?.replace(R.id.main_frame, secondFragment)
-                    ?.addToBackStack(null)
-                    ?.commit()
-                val sharedPref = activity?.getSharedPreferences(MAIN_PREF_KEY, Context.MODE_PRIVATE)
-                sharedPref
-                    ?.edit()
-                    ?.putInt(PREF_KEY_ID, firstScreenPresenter.callSaveId(it.id))
-                    ?.apply()
-            }
             adapter = mainAdapter
             firstScreenPresenter.callData()
         }
@@ -68,9 +69,5 @@ class FirstScreen : Fragment(), FirstScreenView {
     }
     override fun showItems(items: List<Item>) {
         mainAdapter.submitList(items)
-    }
-
-    override fun saveId(id: Int): Int {
-        return id
     }
 }

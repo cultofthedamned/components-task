@@ -11,7 +11,7 @@ class FirstScreenPresenter {
     }
 
     fun callSaveId(id: Int) : Int {
-        return mainView!!.saveId(ItemHolder().receiveItem(id)!!.id)
+        return id
     }
 
     fun attachView(view: FirstScreenView) {

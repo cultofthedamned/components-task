@@ -6,6 +6,4 @@ interface FirstScreenView {
 
     fun showItems(items: List<Item>)
 
-    fun saveId(id: Int): Int
-
 }

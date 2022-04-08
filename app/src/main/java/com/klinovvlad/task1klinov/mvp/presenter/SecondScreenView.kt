@@ -4,6 +4,6 @@ import com.klinovvlad.task1klinov.mvp.model.Item
 
 interface SecondScreenView {
 
-    fun getData(item: Item)
+    fun showItemDetails(item: Item)
 
 }
