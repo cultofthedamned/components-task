@@ -14,29 +14,31 @@ import com.klinovvlad.task1klinov.mvp.model.Item
 import com.klinovvlad.task1klinov.mvp.presenter.FirstScreenPresenter
 import com.klinovvlad.task1klinov.mvp.presenter.FirstScreenView
 import com.klinovvlad.task1klinov.utils.BUNDLE_KEY_ID
-import com.klinovvlad.task1klinov.utils.PREF_KEY_ID
 import com.klinovvlad.task1klinov.utils.MAIN_PREF_KEY
 
 class FirstScreen : Fragment(), FirstScreenView {
     private lateinit var firstScreenBinding: FragmentFirstScreenBinding
-    private val mainAdapter: MainAdapter by lazy { MainAdapter {
-        val bundle = Bundle()
-        bundle.putInt(BUNDLE_KEY_ID, it.id)
-        val secondFragment = SecondScreen()
-        secondFragment.arguments = bundle
-        activity?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(R.id.main_frame, secondFragment)
-            ?.addToBackStack(null)
-            ?.commit()
-        val sharedPref = activity?.getSharedPreferences(MAIN_PREF_KEY, Context.MODE_PRIVATE)
-        sharedPref
-            ?.edit()
-            ?.putInt(PREF_KEY_ID, firstScreenPresenter.callSaveId(it.id))
-            ?.apply()
-    } }
+    private val mainAdapter: MainAdapter by lazy {
+        MainAdapter {
+            val bundle = Bundle()
+            bundle.putInt(BUNDLE_KEY_ID, it.id)
+            val secondFragment = SecondScreen()
+            secondFragment.arguments = bundle
+            activity?.supportFragmentManager
+                ?.beginTransaction()
+                ?.replace(R.id.main_frame, secondFragment)
+                ?.addToBackStack(null)
+                ?.commit()
+            firstScreenPresenter.callSaveId(it.id)
+        }
+    }
     private val firstScreenPresenter: FirstScreenPresenter by lazy {
-        FirstScreenPresenter()
+        FirstScreenPresenter(
+            requireActivity().getSharedPreferences(
+                MAIN_PREF_KEY,
+                Context.MODE_PRIVATE
+            )
+        )
     }
 
     override fun onCreateView(
@@ -67,6 +69,7 @@ class FirstScreen : Fragment(), FirstScreenView {
         firstScreenPresenter.detachView()
         super.onDestroyView()
     }
+
     override fun showItems(items: List<Item>) {
         mainAdapter.submitList(items)
     }
