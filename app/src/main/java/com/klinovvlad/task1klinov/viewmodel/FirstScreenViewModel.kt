@@ -12,7 +12,7 @@ class FirstScreenViewModel(private val sharedPref: SharedPreferences) : ViewMode
     val itemList = MutableLiveData<List<Item>>()
 
     fun getData() {
-        itemList.postValue(ItemHolder().getItems())
+        itemList.postValue(ItemHolder.getItems())
     }
 
     fun saveId(id: Int) {

@@ -14,7 +14,10 @@ import com.klinovvlad.task1klinov.viewmodel.SecondScreenViewModelFactory
 class SecondScreen : Fragment() {
     private lateinit var secondScreenBinding: FragmentSecondScreenBinding
     private val viewModel: SecondScreenViewModel by lazy {
-        ViewModelProvider(requireActivity(), SecondScreenViewModelFactory()).get(
+        ViewModelProvider(
+            requireActivity(),
+            SecondScreenViewModelFactory(requireArguments().getInt(BUNDLE_KEY_ID))
+        ).get(
             SecondScreenViewModel::class.java
         )
     }
@@ -28,15 +31,16 @@ class SecondScreen : Fragment() {
             container,
             false
         )
-        viewModel
         return secondScreenBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val item = viewModel.showItem(requireArguments().getInt(BUNDLE_KEY_ID))
-        secondScreenBinding.textViewSecondId.text = item?.id.toString()
-        secondScreenBinding.textViewSecondName.text = item?.name
-        secondScreenBinding.textViewSecondDescription.text = item?.description
+        viewModel.showItem()
+        viewModel.item.observe(requireActivity()) {
+            secondScreenBinding.textViewSecondId.text = it.id.toString()
+            secondScreenBinding.textViewSecondName.text = it.name
+            secondScreenBinding.textViewSecondDescription.text = it.description
+        }
     }
 }

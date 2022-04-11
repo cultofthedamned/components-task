@@ -1,6 +1,6 @@
 package com.klinovvlad.task1klinov.model
 
-class ItemHolder {
+object ItemHolder {
 
     private val items = (0 until 20).map { i ->
         Item(i, "name $i", "description $i")

@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.klinovvlad.task1klinov.R
@@ -20,12 +19,6 @@ import com.klinovvlad.task1klinov.viewmodel.FirstScreenViewModelFactory
 class FirstScreen : Fragment() {
     private lateinit var firstScreenBinding: FragmentFirstScreenBinding
     private val viewModel: FirstScreenViewModel by lazy {
-        FirstScreenViewModel(
-            requireActivity().getSharedPreferences(
-                MAIN_PREF_KEY,
-                Context.MODE_PRIVATE
-            )
-        )
         ViewModelProvider(
             requireActivity(), FirstScreenViewModelFactory(
                 requireActivity().getSharedPreferences(
@@ -35,7 +28,7 @@ class FirstScreen : Fragment() {
             )
         ).get(FirstScreenViewModel::class.java)
     }
-    private val mainAdapter1: MainAdapter by lazy {
+    private val mainAdapter: MainAdapter by lazy {
         MainAdapter {
             val bundle = Bundle()
             bundle.putInt(BUNDLE_KEY_ID, it.id)
@@ -59,7 +52,6 @@ class FirstScreen : Fragment() {
             container,
             false
         )
-        viewModel
         return firstScreenBinding.root
     }
 
@@ -69,10 +61,10 @@ class FirstScreen : Fragment() {
         firstScreenBinding.recyclerviewMain.apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
-            adapter = mainAdapter1
-            viewModel.itemList.observe(requireActivity(), Observer {
-                mainAdapter1.submitList(it)
-            })
+            adapter = mainAdapter
+        }
+        viewModel.itemList.observe(requireActivity()) {
+            mainAdapter.submitList(it)
         }
     }
 }
