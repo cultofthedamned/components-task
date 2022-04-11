@@ -1,11 +1,11 @@
-package com.klinovvlad.task1klinov.activities
+package com.klinovvlad.task1klinov.view.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.klinovvlad.task1klinov.R
 import com.klinovvlad.task1klinov.databinding.ActivityMainBinding
-import com.klinovvlad.task1klinov.fragments.FirstScreen
-import com.klinovvlad.task1klinov.fragments.SecondScreen
+import com.klinovvlad.task1klinov.view.fragments.FirstScreen
+import com.klinovvlad.task1klinov.view.fragments.SecondScreen
 import com.klinovvlad.task1klinov.service.MainService
 import com.klinovvlad.task1klinov.utils.BUNDLE_KEY_ID
 import com.klinovvlad.task1klinov.utils.PREF_ID_EXTRA_KEY

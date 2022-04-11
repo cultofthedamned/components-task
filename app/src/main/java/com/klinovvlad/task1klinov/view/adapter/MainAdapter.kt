@@ -1,4 +1,4 @@
-package com.klinovvlad.task1klinov.adapter
+package com.klinovvlad.task1klinov.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
